@@ -17,33 +17,116 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yUl-NR-RLr">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yUl-NR-RLr">
                                 <rect key="frame" x="228" y="174" width="105" height="46"/>
                                 <state key="normal" title="Host"/>
                                 <connections>
                                     <action selector="btnHost" destination="BYZ-38-t0r" eventType="touchUpInside" id="csv-vt-rwN"/>
+                                    <segue destination="v4H-ij-dgN" kind="modal" modalTransitionStyle="flipHorizontal" id="skd-Dw-xuO"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xHn-5h-RyY">
-                                <rect key="frame" x="235" y="272" width="91" height="56"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Host or Voter?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EUv-hu-b8I">
+                                <rect key="frame" x="228" y="75" width="148" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xHn-5h-RyY">
+                                <rect key="frame" x="242" y="312" width="91" height="56"/>
                                 <state key="normal" title="Voter"/>
                                 <connections>
                                     <action selector="btnVoter" destination="BYZ-38-t0r" eventType="touchUpInside" id="CIc-6t-dUB"/>
+                                    <segue destination="xqZ-Ar-8Kq" kind="modal" modalTransitionStyle="flipHorizontal" id="Otv-VQ-SoV"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Host or Voter?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EUv-hu-b8I">
-                                <rect key="frame" x="228" y="75" width="148" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="xHn-5h-RyY" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="IIq-R0-vft"/>
+                            <constraint firstItem="EUv-hu-b8I" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="c80-Fq-NJK"/>
+                            <constraint firstItem="yUl-NR-RLr" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hiN-Fg-hMN"/>
+                            <constraint firstItem="EUv-hu-b8I" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="zoC-Le-xsi"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="305" y="366"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="WI7-Je-rQp">
+            <objects>
+                <viewController id="xqZ-Ar-8Kq" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="WZX-3H-pUL"/>
+                        <viewControllerLayoutGuide type="bottom" id="W9U-5G-X8q"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="rPt-iW-vxN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Enter Session Code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ygf-DO-uaG">
+                                <rect key="frame" x="217" y="164" width="153" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0GH-1h-FYc">
+                                <rect key="frame" x="237" y="303" width="125" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="0GH-1h-FYc" firstAttribute="centerX" secondItem="rPt-iW-vxN" secondAttribute="centerX" id="1Zj-0x-1IN"/>
+                            <constraint firstItem="Ygf-DO-uaG" firstAttribute="centerX" secondItem="rPt-iW-vxN" secondAttribute="centerX" id="5CJ-tT-M1b"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="16T-km-Ecs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1105" y="1028"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="eLO-oe-TTd">
+            <objects>
+                <viewController id="v4H-ij-dgN" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="UU5-3j-ZXN"/>
+                        <viewControllerLayoutGuide type="bottom" id="ceq-5T-bsd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="eGL-Hw-SNJ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="This session is for..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2eu-6B-aif">
+                                <rect key="frame" x="273" y="110" width="159" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5ZJ-rN-WNj">
+                                <rect key="frame" x="269" y="190" width="87" height="30"/>
+                                <state key="normal" title="Complexity"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W2p-Tb-qHm">
+                                <rect key="frame" x="247" y="274" width="131" height="30"/>
+                                <state key="normal" title="Business Value"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2eu-6B-aif" firstAttribute="centerX" secondItem="eGL-Hw-SNJ" secondAttribute="centerX" id="Y3V-2Z-qsP"/>
+                            <constraint firstItem="W2p-Tb-qHm" firstAttribute="centerX" secondItem="eGL-Hw-SNJ" secondAttribute="centerX" id="eOb-4K-zR4"/>
+                            <constraint firstItem="5ZJ-rN-WNj" firstAttribute="centerX" secondItem="eGL-Hw-SNJ" secondAttribute="centerX" id="nqR-Aw-cTt"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oTU-LO-p7f" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1105" y="366"/>
         </scene>
     </scenes>
 </document>
