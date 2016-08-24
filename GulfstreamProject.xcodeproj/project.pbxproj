@@ -12,6 +12,7 @@
 		290FDFE81D6E0E9700D2B49A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 290FDFE61D6E0E9700D2B49A /* Main.storyboard */; };
 		290FDFEA1D6E0E9700D2B49A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 290FDFE91D6E0E9700D2B49A /* Assets.xcassets */; };
 		290FDFED1D6E0E9700D2B49A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 290FDFEB1D6E0E9700D2B49A /* LaunchScreen.storyboard */; };
+		29B3506E1D6E2D5600B1AF45 /* VoterSessionCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B3506D1D6E2D5600B1AF45 /* VoterSessionCodeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		290FDFE91D6E0E9700D2B49A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		290FDFEC1D6E0E9700D2B49A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		290FDFEE1D6E0E9700D2B49A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		29B3506D1D6E2D5600B1AF45 /* VoterSessionCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoterSessionCodeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				290FDFE91D6E0E9700D2B49A /* Assets.xcassets */,
 				290FDFEB1D6E0E9700D2B49A /* LaunchScreen.storyboard */,
 				290FDFEE1D6E0E9700D2B49A /* Info.plist */,
+				29B3506D1D6E2D5600B1AF45 /* VoterSessionCodeViewController.swift */,
 			);
 			path = GulfstreamProject;
 			sourceTree = "<group>";
@@ -137,6 +140,7 @@
 			files = (
 				290FDFE51D6E0E9700D2B49A /* HomeViewController.swift in Sources */,
 				290FDFE31D6E0E9700D2B49A /* AppDelegate.swift in Sources */,
+				29B3506E1D6E2D5600B1AF45 /* VoterSessionCodeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
