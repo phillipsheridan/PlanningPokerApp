@@ -9,14 +9,16 @@
 import UIKit
 
 class VoterSessionCodeViewController: UIViewController, UITextFieldDelegate {
-    
+    var sessionNumber = 0
     var inputValue = [String]()
     @IBOutlet weak var enterRoom: UIButton!
     
     @IBOutlet weak var errText: UILabel!
     
+    @IBOutlet weak var name: UILabel!
     @IBOutlet var txtSessionCode: UITextField!
    
+    @IBOutlet weak var nameValue: UITextField!
     @IBAction func submit(_ sender: UIButton) {
         errText.text = "";
         let request = NSMutableURLRequest(url: NSURL(string: "http://10.0.0.12:8080/checkForHostSession.php")! as URL)
@@ -39,18 +41,23 @@ class VoterSessionCodeViewController: UIViewController, UITextFieldDelegate {
             
             let res = responseString as String
             print("responseString = \(responseString)")
-            
-            if 0 == self.parseJSONInt(text: res) {
+            self.sessionNumber = self.parseJSONInt(text: res)
+            if 0 == self.sessionNumber {
                 //self.errText.text = "Invalid Session code, ask your Host again!"
                 DispatchQueue.main.async(execute: { () -> Void in
                     self.errText.text = "Invalid Session code, ask your Host again!"
                     self.enterRoom.isHidden = true
+                    self.name.isHidden = true
+                    self.nameValue.isHidden = true
                 })
                 
             } else {
                 DispatchQueue.main.async(execute: { () -> Void in
                     self.errText.text = "Valid Session code, nice!"
                     self.enterRoom.isHidden = false
+                    self.name.isHidden = false
+                    self.nameValue.isHidden = false
+
                 })
                             }
         }
@@ -81,6 +88,19 @@ class VoterSessionCodeViewController: UIViewController, UITextFieldDelegate {
             substring = text[startRange.upperBound..<endRange.lowerBound]
         }
         return Int(substring)!
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "VoterRoom") {
+            self.enterRoom.isHidden = true
+            self.name.isHidden = true
+            self.nameValue.isHidden = true
+            self.errText.text = ""
+
+            
+            let nextViewController = (segue.destination as! ValidVoterSessionRoom)
+            nextViewController.sessionNumber = self.sessionNumber
+        }
     }
     
     
