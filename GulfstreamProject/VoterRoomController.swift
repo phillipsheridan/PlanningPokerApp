@@ -10,6 +10,8 @@ import UIKit
 
 class VoterRoomController: UIViewController {
 
+    
+    
     func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
         if (segue.identifier == "Complexity") {
             // pass data to next view

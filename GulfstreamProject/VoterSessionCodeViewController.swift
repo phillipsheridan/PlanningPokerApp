@@ -8,18 +8,19 @@
 
 import UIKit
 
-class VoterSessionCodeViewController: UIViewController, UITextFieldDelegate {
+class VoterSessionCodeViewController: CustomViewController, UITextFieldDelegate {
     var sessionNumber = 0
     var inputValue = [String]()
     @IBOutlet weak var enterRoom: UIButton!
     
     @IBOutlet weak var errText: UILabel!
     
-    @IBOutlet weak var name: UILabel!
+   
     @IBOutlet var txtSessionCode: UITextField!
    
-    @IBOutlet weak var nameValue: UITextField!
+    
     @IBAction func submit(_ sender: UIButton) {
+        dismissKeyboard()
         errText.text = "";
         let request = NSMutableURLRequest(url: NSURL(string: "http://10.0.0.12:8080/checkForHostSession.php")! as URL)
         request.httpMethod = "POST"
@@ -47,17 +48,13 @@ class VoterSessionCodeViewController: UIViewController, UITextFieldDelegate {
                 DispatchQueue.main.async(execute: { () -> Void in
                     self.errText.text = "Invalid Session code, ask your Host again!"
                     self.enterRoom.isHidden = true
-                    self.name.isHidden = true
-                    self.nameValue.isHidden = true
                 })
-                
             } else {
                 DispatchQueue.main.async(execute: { () -> Void in
                     self.errText.text = "Valid Session code, nice!"
                     self.enterRoom.isHidden = false
-                    self.name.isHidden = false
-                    self.nameValue.isHidden = false
-
+                    
+                    
                 })
                             }
         }
@@ -66,21 +63,14 @@ class VoterSessionCodeViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        return false
-    }
-    override func viewDidLoad() {
+        override func viewDidLoad() {
         super.viewDidLoad()
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
-        view.addGestureRecognizer(tap)
+       
         self.txtSessionCode.delegate = self
+        
 }
     
-    func dismissKeyboard() {
-        //Causes the view (or one of its embedded text fields) to resign the first responder status.
-        view.endEditing(true)
-    }
+    
     
     func parseJSONInt(text: String) -> Int {
         var substring = ""
@@ -93,15 +83,16 @@ class VoterSessionCodeViewController: UIViewController, UITextFieldDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "VoterRoom") {
             self.enterRoom.isHidden = true
-            self.name.isHidden = true
-            self.nameValue.isHidden = true
-            self.errText.text = ""
+                       self.errText.text = ""
 
             
-            let nextViewController = (segue.destination as! ValidVoterSessionRoom)
+            let nextViewController = (segue.destination as! VoterNameController)
             nextViewController.sessionNumber = self.sessionNumber
+             
         }
     }
+    
+    
     
     
 }

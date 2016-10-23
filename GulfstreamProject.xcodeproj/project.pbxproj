@@ -17,6 +17,8 @@
 		2999C8DE1DAC7C4600E3865C /* HostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2999C8DD1DAC7C4600E3865C /* HostController.swift */; };
 		29B3506E1D6E2D5600B1AF45 /* VoterSessionCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B3506D1D6E2D5600B1AF45 /* VoterSessionCodeViewController.swift */; };
 		29DB4A151DAED87100761A0D /* VoterRoomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DB4A141DAED87100761A0D /* VoterRoomController.swift */; };
+		29E693E71DBD43E900567873 /* VoterNameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E693E61DBD43E900567873 /* VoterNameController.swift */; };
+		29E693E91DBD4E6000567873 /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E693E81DBD4E6000567873 /* CustomViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		2999C8DD1DAC7C4600E3865C /* HostController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostController.swift; sourceTree = "<group>"; };
 		29B3506D1D6E2D5600B1AF45 /* VoterSessionCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoterSessionCodeViewController.swift; sourceTree = "<group>"; };
 		29DB4A141DAED87100761A0D /* VoterRoomController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoterRoomController.swift; sourceTree = "<group>"; };
+		29E693E61DBD43E900567873 /* VoterNameController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoterNameController.swift; sourceTree = "<group>"; };
+		29E693E81DBD4E6000567873 /* CustomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +79,8 @@
 				29188E721DAD8A1A005F436D /* SpecialCell.swift */,
 				29DB4A141DAED87100761A0D /* VoterRoomController.swift */,
 				293724841DBC2A1B00CC94C6 /* ValidVoterSessionRoom.swift */,
+				29E693E61DBD43E900567873 /* VoterNameController.swift */,
+				29E693E81DBD4E6000567873 /* CustomViewController.swift */,
 			);
 			path = GulfstreamProject;
 			sourceTree = "<group>";
@@ -152,7 +158,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29E693E91DBD4E6000567873 /* CustomViewController.swift in Sources */,
 				29188E731DAD8A1A005F436D /* SpecialCell.swift in Sources */,
+				29E693E71DBD43E900567873 /* VoterNameController.swift in Sources */,
 				290FDFE51D6E0E9700D2B49A /* HomeViewController.swift in Sources */,
 				2999C8DE1DAC7C4600E3865C /* HostController.swift in Sources */,
 				29DB4A151DAED87100761A0D /* VoterRoomController.swift in Sources */,

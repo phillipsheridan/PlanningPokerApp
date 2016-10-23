@@ -10,6 +10,8 @@ import UIKit
 
 class ValidVoterSessionRoom: UIViewController {
 
+    var name : String!
+    @IBOutlet weak var nameTf: UILabel!
     // host id
     var sessionNumber:Int!
     //boolean to check if host session is for complexity or business value
@@ -21,7 +23,7 @@ class ValidVoterSessionRoom: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        nameTf.text = name
         self.navigationItem.setHidesBackButton(true, animated: true)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Exit", style: .plain, target: self, action: #selector(exitTapped))
@@ -66,6 +68,7 @@ class ValidVoterSessionRoom: UIViewController {
     }
     func exitTapped () {
         _ = self.navigationController?.popViewController(animated: true)
+        
         
     }
     func voteTapped () {
