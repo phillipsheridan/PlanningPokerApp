@@ -31,7 +31,7 @@ class ValidVoterSessionRoom: UIViewController {
        
         
         //need to know which viewController to show (forComplexity or not?) and add voter if not added yet
-        let request = NSMutableURLRequest(url: NSURL(string: "http://10.0.0.12:8080/getForComplexity.php")! as URL)
+        let request = NSMutableURLRequest(url: NSURL(string: "http://130.254.88.167:8080/getForComplexity.php")! as URL)
         request.httpMethod = "POST"
         let postString = "a=\(sessionNumber!)b=\(device)"
         request.httpBody = postString.data(using: String.Encoding.utf8)
@@ -53,7 +53,10 @@ class ValidVoterSessionRoom: UIViewController {
             let res = responseString as String
             print("responseString = \(responseString)")
             self.forComplexity = self.parseJSONBool(text: res)
-            self.setTitle()
+            DispatchQueue.main.async(execute: { () -> Void in
+                self.setTitle()
+            })
+            
         }
         task.resume()
         

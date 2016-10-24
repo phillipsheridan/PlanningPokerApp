@@ -22,7 +22,7 @@ class VoterSessionCodeViewController: CustomViewController, UITextFieldDelegate 
     @IBAction func submit(_ sender: UIButton) {
         dismissKeyboard()
         errText.text = "";
-        let request = NSMutableURLRequest(url: NSURL(string: "http://10.0.0.12:8080/checkForHostSession.php")! as URL)
+        let request = NSMutableURLRequest(url: NSURL(string: "http://130.254.88.167:8080/checkForHostSession.php")! as URL)
         request.httpMethod = "POST"
         let postString = "a=\(txtSessionCode.text!)"
         request.httpBody = postString.data(using: String.Encoding.utf8)

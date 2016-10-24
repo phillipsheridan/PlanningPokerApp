@@ -9,7 +9,7 @@
 import UIKit
 
 class SpecialCell: UITableViewCell {
-
+//name and vote value
     @IBOutlet var hostid: UILabel!
     @IBOutlet var votersid: UILabel!
     @IBOutlet var forcomplexity: UILabel!
