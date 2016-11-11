@@ -13,6 +13,7 @@
 		290FDFEA1D6E0E9700D2B49A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 290FDFE91D6E0E9700D2B49A /* Assets.xcassets */; };
 		290FDFED1D6E0E9700D2B49A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 290FDFEB1D6E0E9700D2B49A /* LaunchScreen.storyboard */; };
 		29188E731DAD8A1A005F436D /* SpecialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29188E721DAD8A1A005F436D /* SpecialCell.swift */; };
+		291940931DD17C5B00D1971D /* VoterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291940921DD17C5B00D1971D /* VoterTableViewController.swift */; };
 		293724851DBC2A1B00CC94C6 /* ValidVoterSessionRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293724841DBC2A1B00CC94C6 /* ValidVoterSessionRoom.swift */; };
 		2999C8DE1DAC7C4600E3865C /* HostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2999C8DD1DAC7C4600E3865C /* HostController.swift */; };
 		29B3506E1D6E2D5600B1AF45 /* VoterSessionCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B3506D1D6E2D5600B1AF45 /* VoterSessionCodeViewController.swift */; };
@@ -20,6 +21,7 @@
 		29DB4A151DAED87100761A0D /* VoterRoomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DB4A141DAED87100761A0D /* VoterRoomController.swift */; };
 		29E693E71DBD43E900567873 /* VoterNameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E693E61DBD43E900567873 /* VoterNameController.swift */; };
 		29E693E91DBD4E6000567873 /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E693E81DBD4E6000567873 /* CustomViewController.swift */; };
+		29FF29781DC7D25A009AF54F /* IP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF29771DC7D25A009AF54F /* IP.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,7 @@
 		290FDFEC1D6E0E9700D2B49A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		290FDFEE1D6E0E9700D2B49A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		29188E721DAD8A1A005F436D /* SpecialCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialCell.swift; sourceTree = "<group>"; };
+		291940921DD17C5B00D1971D /* VoterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoterTableViewController.swift; sourceTree = "<group>"; };
 		293724841DBC2A1B00CC94C6 /* ValidVoterSessionRoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidVoterSessionRoom.swift; sourceTree = "<group>"; };
 		2999C8DD1DAC7C4600E3865C /* HostController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostController.swift; sourceTree = "<group>"; };
 		29B3506D1D6E2D5600B1AF45 /* VoterSessionCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoterSessionCodeViewController.swift; sourceTree = "<group>"; };
@@ -38,17 +41,8 @@
 		29DB4A141DAED87100761A0D /* VoterRoomController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoterRoomController.swift; sourceTree = "<group>"; };
 		29E693E61DBD43E900567873 /* VoterNameController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoterNameController.swift; sourceTree = "<group>"; };
 		29E693E81DBD4E6000567873 /* CustomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
+		29FF29771DC7D25A009AF54F /* IP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IP.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFrameworksBuildPhase section */
-		290FDFDC1D6E0E9700D2B49A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		290FDFD61D6E0E9700D2B49A = {
@@ -84,6 +78,8 @@
 				29E693E61DBD43E900567873 /* VoterNameController.swift */,
 				29E693E81DBD4E6000567873 /* CustomViewController.swift */,
 				29D100E11DBE58380026C654 /* GetNameHost.swift */,
+				29FF29771DC7D25A009AF54F /* IP.swift */,
+				291940921DD17C5B00D1971D /* VoterTableViewController.swift */,
 			);
 			path = GulfstreamProject;
 			sourceTree = "<group>";
@@ -96,7 +92,6 @@
 			buildConfigurationList = 290FDFF11D6E0E9700D2B49A /* Build configuration list for PBXNativeTarget "GulfstreamProject" */;
 			buildPhases = (
 				290FDFDB1D6E0E9700D2B49A /* Sources */,
-				290FDFDC1D6E0E9700D2B49A /* Frameworks */,
 				290FDFDD1D6E0E9700D2B49A /* Resources */,
 			);
 			buildRules = (
@@ -164,10 +159,12 @@
 				29E693E91DBD4E6000567873 /* CustomViewController.swift in Sources */,
 				29D100E21DBE58380026C654 /* GetNameHost.swift in Sources */,
 				29188E731DAD8A1A005F436D /* SpecialCell.swift in Sources */,
+				29FF29781DC7D25A009AF54F /* IP.swift in Sources */,
 				29E693E71DBD43E900567873 /* VoterNameController.swift in Sources */,
 				290FDFE51D6E0E9700D2B49A /* HomeViewController.swift in Sources */,
 				2999C8DE1DAC7C4600E3865C /* HostController.swift in Sources */,
 				29DB4A151DAED87100761A0D /* VoterRoomController.swift in Sources */,
+				291940931DD17C5B00D1971D /* VoterTableViewController.swift in Sources */,
 				293724851DBC2A1B00CC94C6 /* ValidVoterSessionRoom.swift in Sources */,
 				290FDFE31D6E0E9700D2B49A /* AppDelegate.swift in Sources */,
 				29B3506E1D6E2D5600B1AF45 /* VoterSessionCodeViewController.swift in Sources */,
@@ -233,7 +230,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -273,7 +270,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

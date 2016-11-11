@@ -8,38 +8,45 @@
 
 import UIKit
 
-class HostController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class HostController: UITableViewController {
 
-    @IBOutlet weak var tableView: UITableView!
+    
     @IBAction func refresh(sender: AnyObject) {
         get()
     }
     var values:NSArray = []
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.navigationItem.setHidesBackButton(true, animated: true)
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Exit", style: .plain, target: self, action: #selector(exitTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Start Vote", style: .plain, target: self, action: #selector(startTapped))
+
     }
     
     func get() {
-        let url = NSURL(string: "http://localhost/get.php")
-        let data = NSData(contentsOf: url! as URL)
-        values = try! JSONSerialization.jsonObject(with: data! as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSArray
-        tableView.reloadData()
+        
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return values.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier:"cell", for: indexPath) as! SpecialCell
-        let maindata = values[indexPath.row]
-        //cell.hostid.text = maindata["hostid"] as? String
-       // cell.votersid.text = maindata["votersid"] as? String
-       // cell.forcomplexity.text = maindata["forcomplexity"] as? String
+        //let maindata = values[indexPath.row]
         return cell
+    }
+    
+    func startTapped () {
+        
+    }
+    
+    func exitTapped() {
+        self.performSegue(withIdentifier: "HomeFromHost", sender: self)
     }
     
 

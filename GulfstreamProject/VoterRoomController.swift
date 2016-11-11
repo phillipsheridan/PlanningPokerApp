@@ -10,10 +10,13 @@ import UIKit
 
 class VoterRoomController: UIViewController {
 
-    var forComplexity : Bool!
+    //var forComplexity : Bool!
     
     
-    func prepare(for segue: UIStoryboardSegue!, sender: AnyObject!) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
+        
+        
+        
         if (segue.identifier == "Complexity") {
             let nextViewController = (segue.destination as! GetNameHost)
             nextViewController.forComplexity = true
@@ -22,6 +25,8 @@ class VoterRoomController: UIViewController {
             let nextViewController = (segue.destination as! GetNameHost)
             nextViewController.forComplexity = false
         }
+            
+        
     }
     override func viewDidLoad() {
         super.viewDidLoad()

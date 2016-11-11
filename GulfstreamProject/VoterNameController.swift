@@ -11,6 +11,7 @@ import UIKit
 class VoterNameController: CustomViewController, UITextFieldDelegate {
 
     @IBOutlet weak var nameTf: UITextField!
+    var voterId: String!
     var name: String!
     var sessionNumber : Int!
     override func viewDidLoad() {
@@ -21,14 +22,46 @@ class VoterNameController: CustomViewController, UITextFieldDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "NameEntered") {
+            name = nameTf.text
+            voterId = UIDevice.current.identifierForVendor!.uuidString
+            //force unwrap optionals
+            
+            if let voterIdValue = voterId, let nameValue = name, let hostIdValue = sessionNumber {
             
             
             
             let nextViewController = (segue.destination as! ValidVoterSessionRoom)
             nextViewController.sessionNumber = self.sessionNumber
             nextViewController.name = self.nameTf.text
-        }
+            
+            let request = NSMutableURLRequest(url: NSURL(string: "http://" + IP.getAddress() + ":8080/insertVoter.php")! as URL)
+            
+            request.httpMethod = "POST"
+            request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            let postString = "a=\(nameValue)&b=\(voterIdValue)&c=\(hostIdValue)"
+            request.httpBody = postString.data(using: String.Encoding.utf8)
+            let task = URLSession.shared.dataTask(with: request as URLRequest) {
+                data, response, error in
+                
+                if error != nil {
+                    print("error=\(error)")
+                    return
+                }
+                
+                print("response = \(response)")
+                
+                
+                let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
+                
+                
+                
+                print("responseString = \(responseString)")
+                
+                            }
+            task.resume()
 
+        }
+        }
     }
 
     

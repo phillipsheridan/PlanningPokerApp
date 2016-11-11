@@ -9,10 +9,11 @@
 import UIKit
 
 class SpecialCell: UITableViewCell {
-//name and vote value
-    @IBOutlet var hostid: UILabel!
-    @IBOutlet var votersid: UILabel!
-    @IBOutlet var forcomplexity: UILabel!
+    //name and vote value
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var value: UILabel!
+    
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

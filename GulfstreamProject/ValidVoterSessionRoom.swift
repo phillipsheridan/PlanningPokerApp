@@ -8,10 +8,16 @@
 
 import UIKit
 
-class ValidVoterSessionRoom: UIViewController {
 
+
+class ValidVoterSessionRoom: UITableViewController {
+
+    
+    
+    
     var name : String!
-    @IBOutlet weak var nameTf: UILabel!
+    var names = [String]()
+    var values = [Double]()
     // host id
     var sessionNumber:Int!
     //boolean to check if host session is for complexity or business value
@@ -23,7 +29,13 @@ class ValidVoterSessionRoom: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        nameTf.text = name
+        
+        self.names = []
+        self.values = []
+
+        
+        //self.tableView.delegate = self
+        
         self.navigationItem.setHidesBackButton(true, animated: true)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Exit", style: .plain, target: self, action: #selector(exitTapped))
@@ -31,7 +43,7 @@ class ValidVoterSessionRoom: UIViewController {
        
         
         //need to know which viewController to show (forComplexity or not?) and add voter if not added yet
-        let request = NSMutableURLRequest(url: NSURL(string: "http://130.254.88.167:8080/getForComplexity.php")! as URL)
+        let request = NSMutableURLRequest(url: NSURL(string: "http://" + IP.getAddress() + ":8080/getForComplexity.php")! as URL)
         request.httpMethod = "POST"
         let postString = "a=\(sessionNumber!)b=\(device)"
         request.httpBody = postString.data(using: String.Encoding.utf8)
@@ -44,7 +56,7 @@ class ValidVoterSessionRoom: UIViewController {
             }
             
             print("response = \(response)")
-            print("device = " + self.device)
+            
             
             
             let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
@@ -55,6 +67,7 @@ class ValidVoterSessionRoom: UIViewController {
             self.forComplexity = self.parseJSONBool(text: res)
             DispatchQueue.main.async(execute: { () -> Void in
                 self.setTitle()
+                
             })
             
         }
@@ -62,20 +75,108 @@ class ValidVoterSessionRoom: UIViewController {
         
         
 
+        // update table view
         
+        get()
         
-        
-        
+    
+    
 
         // Do any additional setup after loading the view.
     }
+    // get a json array of everyone with same hostid (show voter's cell first)
+    func get() {
+        self.names = []
+        self.values = []
+        
+        let url = "http://" + IP.getAddress() + ":8080/getRowsForVoter.php"
+        let request = NSMutableURLRequest(url: NSURL(string: url)! as URL)
+        request.httpMethod = "POST"
+        let postString = "a=\(sessionNumber!)"
+        request.httpBody = postString.data(using: String.Encoding.utf8)
+        let task = URLSession.shared.dataTask(with: request as URLRequest) {
+            data, response, error in
+            
+            if error != nil {
+                print("error=\(error)")
+                return
+            }
+            
+            print("response = \(response)")
+            
+            // responseString = {"items":[{"name":"Phil","value":null},{"name":"HostPhil","value":null}]}
+
+            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
+            print("responseString = \(responseString)")
+            
+            let json = try! JSONSerialization.jsonObject(with:data! as Data, options: .allowFragments) as! [String: Any]
+            let items = json["items"] as! [[String: Any]]
+            for item in items {
+                self.names.append(item["name"] as! String)
+                if let v = item["value"] as? Double{
+                    self.values.append(v)
+                } else {
+                    self.values.append(-1.0)
+                }
+                for t in self.values {
+                print("value: " + String(t))
+                }
+                for k in self.names {
+                    print("name: " + String(k))
+                }
+                //self.values.append(item["value"] as! Double)
+                //names are in names array, values are now in values array
+            }
+            
+            DispatchQueue.main.async() {
+                self.tableView.reloadData()
+                
+                
+            }
+
+            
+            
+                    }
+        task.resume()
+        
+        
+        
+            }
+
+            
+    
+    
+        
+    
+        
+    
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return values.count
+    }
+   
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier:"cell", for: indexPath) as! SpecialCell
+        
+        cell.name.text = names[indexPath.row] as String
+        if values[indexPath.row] == -1 {
+            cell.value.text = "?"
+        } else {
+            cell.value.text = String(values[indexPath.row])
+        }
+        return cell
+    }
+
+    
     func exitTapped () {
-        _ = self.navigationController?.popViewController(animated: true)
+        //_ = self.navigationController?.popViewController(animated: true)
+        
+        self.performSegue(withIdentifier: "home", sender: self)
         
         
     }
     func voteTapped () {
-        
+        //get()
     }
     
     func parseJSONBool(text: String) -> Bool {
@@ -86,17 +187,10 @@ class ValidVoterSessionRoom: UIViewController {
         return Bool(substring)!
     }
     func setTitle() {
-        if self.forComplexity! {
-            self.title = "Complexity"
-        }
-        else {
-            self.title = "Business Value"
-        }
+        self.title = self.name
+    
+    
     }
- 
-    
-    
-    
 
     
 }
