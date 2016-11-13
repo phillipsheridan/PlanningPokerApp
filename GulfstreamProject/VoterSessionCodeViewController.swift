@@ -9,12 +9,12 @@
 import UIKit
 
 class VoterSessionCodeViewController: CustomViewController, UITextFieldDelegate {
-    var sessionNumber = 0
+    var valid = 0
     var inputValue = [String]()
     @IBOutlet weak var enterRoom: UIButton!
     
     @IBOutlet weak var errText: UILabel!
-    
+    var sessionCode: String!
    
     @IBOutlet var txtSessionCode: UITextField!
    
@@ -25,6 +25,7 @@ class VoterSessionCodeViewController: CustomViewController, UITextFieldDelegate 
         let request = NSMutableURLRequest(url: NSURL(string: "http://" + IP.getAddress() + ":8080/checkForHostSession.php")! as URL)
         request.httpMethod = "POST"
         let postString = "a=\(txtSessionCode.text!)"
+        self.sessionCode = txtSessionCode.text!
         request.httpBody = postString.data(using: String.Encoding.utf8)
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in
@@ -42,8 +43,8 @@ class VoterSessionCodeViewController: CustomViewController, UITextFieldDelegate 
             
             let res = responseString as String
             print("responseString = \(responseString)")
-            self.sessionNumber = self.parseJSONInt(text: res)
-            if 0 == self.sessionNumber {
+            self.valid = Int(res)!
+            if 0 == self.valid {
                 //self.errText.text = "Invalid Session code, ask your Host again!"
                 DispatchQueue.main.async(execute: { () -> Void in
                     self.errText.text = "Invalid Session code, ask your Host again!"
@@ -72,24 +73,19 @@ class VoterSessionCodeViewController: CustomViewController, UITextFieldDelegate 
     
     
     
-    func parseJSONInt(text: String) -> Int {
-        var substring = ""
-        if let startRange = text.range(of:":"), let endRange = text.range(of:"}") {
-            substring = text[startRange.upperBound..<endRange.lowerBound]
-        }
-        return Int(substring)!
-    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "VoterRoom") {
             self.enterRoom.isHidden = true
                        self.errText.text = ""
+            let session = self.sessionCode
 
             
             let nextViewController = (segue.destination as! VoterNameController)
-            nextViewController.sessionNumber = self.sessionNumber
+            nextViewController.sessionNumber = session
              
         }
+        
     }
     
     

@@ -19,7 +19,7 @@ class ValidVoterSessionRoom: UITableViewController {
     var names = [String]()
     var values = [Double]()
     // host id
-    var sessionNumber:Int!
+    var sessionNumber:String!
     //boolean to check if host session is for complexity or business value
     var forComplexity:Bool!
     //voter's current vote
@@ -86,13 +86,15 @@ class ValidVoterSessionRoom: UITableViewController {
     }
     // get a json array of everyone with same hostid (show voter's cell first)
     func get() {
+        
+        if let sess = self.sessionNumber {
         self.names = []
         self.values = []
         
         let url = "http://" + IP.getAddress() + ":8080/getRowsForVoter.php"
         let request = NSMutableURLRequest(url: NSURL(string: url)! as URL)
         request.httpMethod = "POST"
-        let postString = "a=\(sessionNumber!)"
+        let postString = "a=\(sess)"
         request.httpBody = postString.data(using: String.Encoding.utf8)
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in
@@ -140,8 +142,10 @@ class ValidVoterSessionRoom: UITableViewController {
         task.resume()
         
         
+        }
         
             }
+        
 
             
     
@@ -187,9 +191,15 @@ class ValidVoterSessionRoom: UITableViewController {
         return Bool(substring)!
     }
     func setTitle() {
-        self.title = self.name
+        if let a = self.forComplexity {
+        if (a) {
+            self.title = "Complexity"
+        }
+        else {
+            self.title = "Business Value"
+        }
     
-    
+            }
     }
 
     

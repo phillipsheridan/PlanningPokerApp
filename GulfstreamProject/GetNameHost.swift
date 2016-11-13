@@ -17,6 +17,8 @@ class GetNameHost: CustomViewController {
     
     @IBOutlet weak var lblName: UILabel!
     
+    var hostid: String!
+    
     @IBOutlet weak var tfName: UITextField!
     
     override func viewDidLoad() {
@@ -49,8 +51,15 @@ class GetNameHost: CustomViewController {
                     print("response = \(response)")
                     
                     
+                    
+                    
+                    
                     let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
                     
+                    // AlertView to give the host the number & set it to pass to segue FIGURE OUT WHY HOSTID IS EMPTY
+                    self.hostid = responseString as String
+                    let nextViewController = (segue.destination as! HostController)
+                    nextViewController.hostid = self.hostid
                     
                     
                     print("responseString = \(responseString)")

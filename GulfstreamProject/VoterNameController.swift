@@ -13,7 +13,7 @@ class VoterNameController: CustomViewController, UITextFieldDelegate {
     @IBOutlet weak var nameTf: UITextField!
     var voterId: String!
     var name: String!
-    var sessionNumber : Int!
+    var sessionNumber : String! //changed
     override func viewDidLoad() {
         super.viewDidLoad()
         self.nameTf.delegate = self
@@ -31,13 +31,12 @@ class VoterNameController: CustomViewController, UITextFieldDelegate {
             
             
             let nextViewController = (segue.destination as! ValidVoterSessionRoom)
-            nextViewController.sessionNumber = self.sessionNumber
+            nextViewController.sessionNumber = hostIdValue
             nextViewController.name = self.nameTf.text
             
             let request = NSMutableURLRequest(url: NSURL(string: "http://" + IP.getAddress() + ":8080/insertVoter.php")! as URL)
             
             request.httpMethod = "POST"
-            request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
             let postString = "a=\(nameValue)&b=\(voterIdValue)&c=\(hostIdValue)"
             request.httpBody = postString.data(using: String.Encoding.utf8)
             let task = URLSession.shared.dataTask(with: request as URLRequest) {
