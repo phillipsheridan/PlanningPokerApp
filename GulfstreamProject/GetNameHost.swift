@@ -26,50 +26,18 @@ class GetNameHost: CustomViewController {
         
         
     }
+    @IBAction func getName(_ sender: UIButton) {
+        self.name = tfName.text
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        //we just need to send name to next view controller
         if segue.identifier == "HostName" {
-            name = tfName.text
+            let nextViewController = segue.destination as! HostController
+            nextViewController.name = self.name
+            nextViewController.forComplexity = self.forComplexity
             
-            if let hostName = name, let complex = forComplexity {
-                //let nextViewController = (segue.destination as! HostController)
-                // ^ might need this idk, probably not
-                let request = NSMutableURLRequest(url: NSURL(string: "http://" + IP.getAddress() + ":8080/insertHost.php")! as URL)
-                
-                request.httpMethod = "POST"
-                //request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-                let postString = "a=\(hostName)&b=\(complex)"
-                request.httpBody = postString.data(using: String.Encoding.utf8)
-                let task = URLSession.shared.dataTask(with: request as URLRequest) {
-                    data, response, error in
-                    
-                    if error != nil {
-                        print("error=\(error)")
-                        return
-                    }
-                    
-                    print("response = \(response)")
-                    
-                    
-                    
-                    
-                    
-                    let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
-                    
-                    // AlertView to give the host the number & set it to pass to segue FIGURE OUT WHY HOSTID IS EMPTY
-                    self.hostid = responseString as String
-                    let nextViewController = (segue.destination as! HostController)
-                    nextViewController.hostid = self.hostid
-                    
-                    
-                    print("responseString = \(responseString)")
-                    
-                }
-                task.resume()
-                
-                
-                
-            }
         }
     }
 

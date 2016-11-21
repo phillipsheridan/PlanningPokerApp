@@ -70,19 +70,33 @@ class ValidVoterSessionRoom: UITableViewController {
                 
             })
             
+            self.get()
+            
         }
         task.resume()
         
         
 
-        // update table view
         
-        get()
+        
+        //need to make thread to check every few sec if hostid still exists here > {
+        
+        
+        //if not perform segue and show alertview so they know why
+        
+        
+        //if yes, update table view and check if host is ready to show average,
+            // if show average = 1
+                // query the database for the average.
+            // else 
+                //
+        
+        //if host is showing average, alertview to give average
         
     
     
 
-        // Do any additional setup after loading the view.
+       
     }
     // get a json array of everyone with same hostid (show voter's cell first)
     func get() {
@@ -173,9 +187,19 @@ class ValidVoterSessionRoom: UITableViewController {
 
     
     func exitTapped () {
-        //_ = self.navigationController?.popViewController(animated: true)
+        let alert = UIAlertController(title: "Alert", message: "Are you sure you want exit?", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { (alert: UIAlertAction!) in
+            
+            self.performSegue(withIdentifier: "home", sender: self)
+            
+            
+        }))
+        alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
         
-        self.performSegue(withIdentifier: "home", sender: self)
+
+        
+        //self.performSegue(withIdentifier: "home", sender: self)
         
         
     }
