@@ -13,7 +13,7 @@ import UIKit
 class ValidVoterSessionRoom: UITableViewController {
 
     
-    
+    var timer: Timer!
     
     var name : String!
     var names = [String]()
@@ -79,25 +79,77 @@ class ValidVoterSessionRoom: UITableViewController {
 
         
         
-        //need to make thread to check every few sec if hostid still exists here > {
+        //thread timer to check every few sec if hostid still exists here
         
+        timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(checkTimer), userInfo: nil, repeats: true)
         
-        //if not perform segue and show alertview so they know why
-        
-        
-        //if yes, update table view and check if host is ready to show average,
-            // if show average = 1
-                // query the database for the average.
-            // else 
-                //
-        
-        //if host is showing average, alertview to give average
+    
         
     
     
 
        
     }
+    
+    func checkTimer() {
+        
+        
+        let request2 = NSMutableURLRequest(url: NSURL(string: "http://" + IP.getAddress() + ":8080/checkForHostSession.php")! as URL)
+        request2.httpMethod = "POST"
+        let idString = "a=\(self.sessionNumber!)"
+        request2.httpBody = idString.data(using: String.Encoding.utf8)
+        let task2 = URLSession.shared.dataTask(with: request2 as URLRequest) {
+            data, response, error in
+            
+            if error != nil {
+                print("error=\(error)")
+                return
+            }
+            
+            print("response = \(response)")
+            
+            
+            
+            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
+            
+            
+            let res = responseString as String
+            print("responseString = \(responseString)")
+            
+            if res == "0" {
+                self.timer.invalidate()
+                DispatchQueue.main.async(execute: { () -> Void in
+                    let alert = UIAlertController(title: "Alert", message: "The host has ended the session!", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: { (alert: UIAlertAction!) in
+                        
+                        self.performSegue(withIdentifier: "home", sender: self)
+                        
+                        
+                    }))
+                    self.present(alert, animated: true, completion: nil)
+
+                    
+                })
+            } else {
+                //if yes, update table view and check if host is ready to show average,
+                // if show average = 1
+                // query the database for the average.
+                // else
+                //
+                //if host is showing average, alertview to give average
+                
+                self.get()
+                
+            }
+            
+            
+            
+        }
+        task2.resume()
+    }
+    
+    
+
     // get a json array of everyone with same hostid (show voter's cell first)
     func get() {
         
@@ -140,12 +192,14 @@ class ValidVoterSessionRoom: UITableViewController {
                 for k in self.names {
                     print("name: " + String(k))
                 }
-                //self.values.append(item["value"] as! Double)
-                //names are in names array, values are now in values array
+               
             }
+            
+            //maybe we can check if host wants to show vote here and update a label in View
             
             DispatchQueue.main.async() {
                 self.tableView.reloadData()
+                
                 
                 
             }
@@ -187,8 +241,36 @@ class ValidVoterSessionRoom: UITableViewController {
 
     
     func exitTapped () {
+        self.timer.invalidate()
         let alert = UIAlertController(title: "Alert", message: "Are you sure you want exit?", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { (alert: UIAlertAction!) in
+            //delete voter
+            let request = NSMutableURLRequest(url: NSURL(string: "http://" + IP.getAddress() + ":8080/removeVoter.php")! as URL)
+            request.httpMethod = "POST"
+            let postString = "a=\(self.device)&b=\(self.sessionNumber!)"
+            request.httpBody = postString.data(using: String.Encoding.utf8)
+            let task = URLSession.shared.dataTask(with: request as URLRequest) {
+                data, response, error in
+                
+                if error != nil {
+                    print("error=\(error)")
+                    return
+                }
+                
+                print("response = \(response)")
+                
+                
+                
+                let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
+                
+                
+                let res = responseString as String
+                print("responseString = \(responseString)")
+                print("res = \(res)")
+                
+            }
+            task.resume()
+
             
             self.performSegue(withIdentifier: "home", sender: self)
             
@@ -204,6 +286,7 @@ class ValidVoterSessionRoom: UITableViewController {
         
     }
     func voteTapped () {
+        self.timer.invalidate()
         //get()
     }
     
