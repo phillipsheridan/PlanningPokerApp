@@ -121,7 +121,7 @@ class ValidVoterSessionRoom: UITableViewController {
                 DispatchQueue.main.async(execute: { () -> Void in
                     let alert = UIAlertController(title: "Alert", message: "The host has ended the session!", preferredStyle: UIAlertControllerStyle.alert)
                     alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: { (alert: UIAlertAction!) in
-                        
+                        self.timer.invalidate()
                         self.performSegue(withIdentifier: "home", sender: self)
                         
                         
@@ -232,7 +232,7 @@ class ValidVoterSessionRoom: UITableViewController {
         
         cell.name.text = names[indexPath.row] as String
         if values[indexPath.row] == -1 {
-            cell.value.text = "?"
+            cell.value.text = "\u{2753}"
         } else {
             cell.value.text = String(values[indexPath.row])
         }
@@ -241,7 +241,7 @@ class ValidVoterSessionRoom: UITableViewController {
 
     
     func exitTapped () {
-        self.timer.invalidate()
+        
         let alert = UIAlertController(title: "Alert", message: "Are you sure you want exit?", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { (alert: UIAlertAction!) in
             //delete voter
@@ -271,7 +271,7 @@ class ValidVoterSessionRoom: UITableViewController {
             }
             task.resume()
 
-            
+            self.timer.invalidate()
             self.performSegue(withIdentifier: "home", sender: self)
             
             
@@ -287,8 +287,29 @@ class ValidVoterSessionRoom: UITableViewController {
     }
     func voteTapped () {
         self.timer.invalidate()
-        //get()
+        //segue to the buttons, the segue back will update their vote value'
+        if self.forComplexity! {
+            performSegue(withIdentifier: "voterComplexity", sender: self)
+        } else {
+            performSegue(withIdentifier: "voterBusinessValue", sender: self)
+        }
+
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        //send current value, check if nil in next controller
+        if segue.identifier == "voterComplexity" {
+            let nextViewController = segue.destination as! ComplexityViewController
+            nextViewController.value = self.voteValue
+            
+        }
+        else if segue.identifier == "voterBusinessValue"{
+            let nextViewController = segue.destination as! BusinessValueViewController
+            nextViewController.value = self.voteValue
+        }
+    }
+
     
     func parseJSONBool(text: String) -> Bool {
         var substring = ""

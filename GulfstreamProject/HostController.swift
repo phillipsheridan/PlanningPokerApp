@@ -15,6 +15,7 @@ class HostController: UITableViewController {
     var forComplexity:Bool!
     var hostid: String!
     var name: String!
+    var voteValue: Float!
             
     
     override func viewDidLoad() {
@@ -65,7 +66,11 @@ class HostController: UITableViewController {
             let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
             
             // AlertView to give the host the number
-            self.title = responseString as String!
+            DispatchQueue.main.async() {
+                self.title = responseString as String!
+            }
+            
+            
             let alert = UIAlertController(title: "Alert", message: "Your session code is: \(responseString)", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
@@ -208,15 +213,37 @@ class HostController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier:"hostCell", for: indexPath) as! HostCellTableViewCell
         cell.name.text = names[indexPath.row] as String
         if values[indexPath.row] == -1 {
-            cell.value.text = "Has not voted"
+            cell.value.text = "\u{274C}"
         } else {
             cell.value.text = String(values[indexPath.row])
         }
         return cell
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+            //send current value, check if nil in next controller
+            if segue.identifier == "hostComplexity" {
+                let nextViewController = segue.destination as! ComplexityViewController
+                nextViewController.value = self.voteValue
+            
+        }
+            else if segue.identifier == "hostBusinessValue" {
+                let nextViewController = segue.destination as! BusinessValueViewController
+                nextViewController.value = self.voteValue
+        }
+    }
+
+    
     func voteTapped () {
-        //segue to the buttons, the segue back will update their vote value
+        self.timer.invalidate()
+        //segue to the buttons, the segue back will update their vote value'
+        if self.forComplexity! {
+            performSegue(withIdentifier: "hostComplexity", sender: self)
+        } else {
+            performSegue(withIdentifier: "hostBusinessValue", sender: self)
+        }
+        
         
     }
     func showTapped () {
@@ -253,13 +280,14 @@ class HostController: UITableViewController {
             }
             task.resume()
 
+            self.timer.invalidate()
             self.performSegue(withIdentifier: "HomeFromHost", sender: self)
             
             
         }))
         alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
-        self.performSegue(withIdentifier: "HomeFromHost", sender: self)
+        
     }
     
     
