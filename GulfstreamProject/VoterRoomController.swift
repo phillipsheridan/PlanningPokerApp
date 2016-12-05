@@ -17,12 +17,12 @@ class VoterRoomController: UIViewController {
         
         
         
-        if (segue.identifier == "Complexity") {
-            let nextViewController = (segue.destination as! GetNameHost)
+        if (segue.identifier == "complexity") {
+            let nextViewController = (segue.destination as! HostController)
             nextViewController.forComplexity = true
         }
-        else if (segue.identifier == "BusinessValue") {
-            let nextViewController = (segue.destination as! GetNameHost)
+        else if (segue.identifier == "businessValue") {
+            let nextViewController = (segue.destination as! HostController)
             nextViewController.forComplexity = false
         }
             

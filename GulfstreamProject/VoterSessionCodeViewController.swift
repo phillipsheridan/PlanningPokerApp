@@ -67,7 +67,7 @@ class VoterSessionCodeViewController: CustomViewController, UITextFieldDelegate 
         override func viewDidLoad() {
         super.viewDidLoad()
        
-        self.txtSessionCode.delegate = self
+        //self.txtSessionCode.delegate = self
         
 }
     
@@ -77,7 +77,7 @@ class VoterSessionCodeViewController: CustomViewController, UITextFieldDelegate 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "VoterRoom") {
             self.enterRoom.isHidden = true
-                       self.errText.text = ""
+            self.errText.text = ""
             let session = self.sessionCode
 
             

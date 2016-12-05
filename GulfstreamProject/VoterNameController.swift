@@ -16,7 +16,7 @@ class VoterNameController: CustomViewController, UITextFieldDelegate {
     var sessionNumber : String! //changed
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.nameTf.delegate = self
+        //self.nameTf.delegate = self
 
             }
     

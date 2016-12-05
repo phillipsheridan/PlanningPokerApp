@@ -35,7 +35,7 @@ class GetNameHost: CustomViewController {
         //we just need to send name to next view controller
         if segue.identifier == "HostName" {
             let nextViewController = segue.destination as! HostController
-            nextViewController.name = self.name
+            
             nextViewController.forComplexity = self.forComplexity
             
         }

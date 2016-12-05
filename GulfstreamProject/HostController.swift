@@ -14,8 +14,7 @@ class HostController: UITableViewController {
     var values = [Double]()
     var forComplexity:Bool!
     var hostid: String!
-    var name: String!
-    var voteValue: Float!
+    var device: String!
             
     
     override func viewDidLoad() {
@@ -25,20 +24,22 @@ class HostController: UITableViewController {
         self.navigationItem.setHidesBackButton(true, animated: true)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "End", style: .plain, target: self, action: #selector(exitTapped))
-        let voteButton = UIBarButtonItem(title: "Vote!", style: .plain, target: self, action: #selector(voteTapped))
-        let showButton = UIBarButtonItem(title: "Show!", style: .plain, target: self, action: #selector(showTapped))
-        navigationItem.rightBarButtonItems = [voteButton, showButton]
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Average", style: .plain, target: self, action: #selector(averageTapped))
+        let avgButton = UIBarButtonItem(title: "Average", style: .plain, target: self, action: #selector(averageTapped))
+        let changeButton = UIBarButtonItem(title: "Topic", style: .plain, target: self, action: #selector(changeTopic))
+        
+        navigationItem.rightBarButtonItems = [changeButton, avgButton]
         
         get()
         
         //thread to update table view goes here
-        timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(checkTimer), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(checkTimer), userInfo: nil, repeats: true)
 
     }
     
     func get() {
         
-        let hostname = self.name
+        
         let complex = self.forComplexity
         self.names = []
         self.values = []
@@ -47,7 +48,7 @@ class HostController: UITableViewController {
         let request = NSMutableURLRequest(url: NSURL(string: "http://" + IP.getAddress() + ":8080/insertHost.php")! as URL)
         
         request.httpMethod = "POST"
-        let postString = "a=\(hostname!)&b=\(complex!)"
+        let postString = "b=\(complex!)" //change query
         request.httpBody = postString.data(using: String.Encoding.utf8)
         let task1 = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in
@@ -67,7 +68,12 @@ class HostController: UITableViewController {
             
             // AlertView to give the host the number
             DispatchQueue.main.async() {
-                self.title = responseString as String!
+                if (self.forComplexity!) {
+                self.title = responseString as String! + "(Complexity)"
+                } else {
+                    self.title = responseString as String! + "(Business Value)"
+                    
+                }
             }
             
             
@@ -81,58 +87,7 @@ class HostController: UITableViewController {
         print("responseString = \(responseString)")
             
             
-            //start task 2
-            let host = self.hostid
-            let url = "http://" + IP.getAddress() + ":8080/showHostInTable.php"
-            let request2 = NSMutableURLRequest(url: NSURL(string: url)! as URL)
-            request2.httpMethod = "POST"
-            let postString2 = "a=\(host!)"
-            request2.httpBody = postString2.data(using: String.Encoding.utf8)
-            let task2 = URLSession.shared.dataTask(with: request2 as URLRequest) {
-                data, response, error in
-                
-                if error != nil {
-                    print("error=\(error)")
-                    return
-                }
-                
-                print("response = \(response)")
-                
-                // responseString = {"items":[{"name":"Phil","value":null},{"name":"HostPhil","value":null}]}
-                
-                let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
-                print("responseString = \(responseString)")
-                
-                let json = try! JSONSerialization.jsonObject(with:data! as Data, options: .allowFragments) as! [String: Any]
-                let items = json["items"] as! [[String: Any]]
-                for item in items {
-                    self.names.append(item["name"] as! String)
-                    if let v = item["value"] as? Double{
-                        self.values.append(v)
-                    } else {
-                        self.values.append(-1.0)
-                    }
-                    for t in self.values {
-                        print("value: " + String(t))
-                    }
-                    for k in self.names {
-                        print("name: " + String(k))
-                    }
-                    //self.values.append(item["value"] as! Double)
-                    //names are in names array, values are now in values array
-                    DispatchQueue.main.async() {
-                        self.tableView.reloadData()
-                        
-                        
-                    }
-                }
-                
-                
-                
-                
-                
-            }
-            task2.resume()
+           
             
         }
         task1.resume()
@@ -140,8 +95,34 @@ class HostController: UITableViewController {
 
 
         
-        
-        
+    func changeTopic() {
+        self.forComplexity! = !(self.forComplexity!)
+        let request = NSMutableURLRequest(url: NSURL(string: "http://" + IP.getAddress() + ":8080/setForComplexity.php")! as URL)
+        request.httpMethod = "POST"
+        let postString = "a=\(hostid!)&b=\(forComplexity!)"
+        request.httpBody = postString.data(using: String.Encoding.utf8)
+        let task = URLSession.shared.dataTask(with: request as URLRequest) {
+            data, response, error in
+            
+            if error != nil {
+                print("error=\(error)")
+                return
+            }
+            
+            print("response = \(response)")
+            
+            
+            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
+            
+            
+            
+            print("responseString = \(responseString)")
+            
+            
+        }
+        task.resume()
+    }
+    
 
     
     func checkTimer() {
@@ -174,8 +155,8 @@ class HostController: UITableViewController {
                 let items = json["items"] as! [[String: Any]]
                 for item in items {
                     self.names.append(item["name"] as! String)
-                    if let v = item["value"] as? Double{
-                        self.values.append(v)
+                    if let v = item["value"] as? String{
+                        self.values.append(Double(v)!)
                     } else {
                         self.values.append(-1.0)
                     }
@@ -191,6 +172,16 @@ class HostController: UITableViewController {
                 //maybe we can check if host wants to show vote here and update a label in View
                 
                 DispatchQueue.main.async() {
+                    
+                    
+                        if (self.forComplexity!) {
+                            self.title = self.hostid as String! + "(Complexity)"
+                        } else {
+                            self.title = self.hostid as String! + "(Business Value)"
+                            
+                        }
+                    
+
                     self.tableView.reloadData()
                     
                     
@@ -214,40 +205,60 @@ class HostController: UITableViewController {
         cell.name.text = names[indexPath.row] as String
         if values[indexPath.row] == -1 {
             cell.value.text = "\u{274C}"
-        } else {
+        }
+        else if values[indexPath.row] == -2 {
+            cell.value.text = "\u{2753}"
+        }
+        else if values[indexPath.row] == -3 {
+            cell.value.text = "\u{2615}"
+        }
+        else if values[indexPath.row] == -4 {
+            cell.value.text = "\u{1F914}"
+        }
+        else {
             cell.value.text = String(values[indexPath.row])
         }
         return cell
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-            //send current value, check if nil in next controller
-            if segue.identifier == "hostComplexity" {
-                let nextViewController = segue.destination as! ComplexityViewController
-                nextViewController.value = self.voteValue
+    
+    
+    
+    func averageTapped () {
+        //get Average and null all votes
+        let request = NSMutableURLRequest(url: NSURL(string: "http://" + IP.getAddress() + ":8080/getAverage.php")! as URL)
+        request.httpMethod = "POST"
+        let postString = "a=\(self.hostid!)"
+        request.httpBody = postString.data(using: String.Encoding.utf8)
+        let task = URLSession.shared.dataTask(with: request as URLRequest) {
+            data, response, error in
+            
+            if error != nil {
+                print("error=\(error)")
+                return
+            }
+            
+            print("response = \(response)")
+            
+            
+            
+            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
+            
+            
+            let res = responseString as String
+            print("responseString = \(responseString)")
+            print("res = \(res)")
+            
+            DispatchQueue.main.async {
+                let alert = UIAlertController(title: "Alert", message: "The average is \(res)", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
             
         }
-            else if segue.identifier == "hostBusinessValue" {
-                let nextViewController = segue.destination as! BusinessValueViewController
-                nextViewController.value = self.voteValue
-        }
-    }
+        task.resume()
 
-    
-    func voteTapped () {
-        self.timer.invalidate()
-        //segue to the buttons, the segue back will update their vote value'
-        if self.forComplexity! {
-            performSegue(withIdentifier: "hostComplexity", sender: self)
-        } else {
-            performSegue(withIdentifier: "hostBusinessValue", sender: self)
-        }
         
-        
-    }
-    func showTapped () {
-        //segue to the buttons, the segue back will update their vote value
         
     }
     func exitTapped() {
